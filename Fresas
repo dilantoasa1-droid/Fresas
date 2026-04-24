@@ -1,0 +1,139 @@
+index.html
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fresas con Crema</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      padding: 20px;
+      margin: 0;
+    }.container {
+  display: flex;
+  flex-wrap: wrap;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  gap: 20px;
+}
+
+.imagen {
+  flex: 1;
+  min-width: 250px;
+}
+
+.imagen img {
+  width: 100%;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+.info {
+  flex: 1;
+  min-width: 250px;
+}
+
+h1 {
+  color: #e63946;
+}
+
+button {
+  background: #e63946;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+button:hover {
+  background: #d62828;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#barcode {
+  margin-top: 10px;
+}
+
+#barcode-number {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+  </style>
+</head>
+<body>  <div class="container"><!-- IMAGEN -->
+<div class="imagen">
+  <img src="https://i.imgur.com/3ZQ3Z4C.jpg" alt="Fresas con crema">
+</div>
+
+<!-- INFORMACIÓN -->
+<div class="info">
+  <h1>🍓 Fresas con Crema</h1>
+
+  <p>
+    Las fresas con crema son un delicioso postre hecho con fresas frescas
+    acompañadas de una mezcla suave y dulce de crema. Es refrescante,
+    natural y perfecto para cualquier momento del día.
+  </p>
+
+  <h3>Precio</h3>
+  <p><strong>$0.50 por porción</strong></p>
+
+  <h3>Haz tu pedido</h3>
+  <input type="text" id="nombre" placeholder="Tu nombre">
+  <input type="number" id="cantidad" placeholder="Cantidad">
+  <button onclick="hacerPedido()">Pedir</button>
+
+  <p id="mensaje"></p>
+
+  <h3>Código de barras</h3>
+  <svg id="barcode"></svg>
+  <p id="barcode-number"></p>
+</div>
+
+  </div>  <script>
+    function hacerPedido() {
+      const nombre = document.getElementById('nombre').value;
+      const cantidad = parseFloat(document.getElementById('cantidad').value);
+      const mensaje = document.getElementById('mensaje');
+
+      const precio = 0.50;
+
+      if(nombre && cantidad) {
+        const total = (cantidad * precio).toFixed(2);
+        mensaje.innerHTML = `Gracias ${nombre}, tu pedido de ${cantidad} fresas con crema ha sido recibido 🍓<br>Total a pagar: $${total}`;
+      } else {
+        mensaje.innerHTML = "Por favor completa todos los campos";
+      }
+    }
+
+    // Código de barras real
+    const script = document.createElement('script');
+    script.src = "https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js";
+    script.onload = function() {
+      const codigo = "750123456789";
+      JsBarcode("#barcode", codigo, {
+        format: "EAN13",
+        displayValue: false
+      });
+      document.getElementById("barcode-number").innerText = codigo;
+    };
+    document.body.appendChild(script);
+  </script></body>
+</html>
